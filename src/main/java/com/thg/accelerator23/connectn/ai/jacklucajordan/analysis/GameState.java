@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;
 
 import com.thehutgroup.accelerator.connectn.player.Counter;
@@ -70,4 +71,7 @@ public class GameState {
   public int hashCode() {
     return Objects.hash(maxInARowByCounter, win, draw, winner);
   }
+=======
+package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;public class GameState {
+>>>>>>> e615e38 (undoing changed to pull)
 }

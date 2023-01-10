@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;
 
 
@@ -112,4 +113,7 @@ public class BoardAnalyser {
     }
     return bestRunByColour;
   }
+=======
+package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;public class BoardAnalyser {
+>>>>>>> e615e38 (undoing changed to pull)
 }
