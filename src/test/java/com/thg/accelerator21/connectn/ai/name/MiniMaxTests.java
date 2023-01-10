@@ -65,7 +65,7 @@ public class MiniMaxTests {
         Node node = new Node(board, Counter.X);
         System.out.println("made");
 
-        int move = Minimax.run(node, false)[1];
+        int move = Minimax.run(node, false, -10,10)[1];
         assertEquals(6, move);
     }
 
@@ -86,7 +86,7 @@ public class MiniMaxTests {
         Node node = new Node(board, Counter.X);
         System.out.println("made");
 
-        int move = Minimax.run(node, false)[1];
+        int move = Minimax.run(node, false, -10, 10)[1];
         assertEquals(6, move);
     }
 }

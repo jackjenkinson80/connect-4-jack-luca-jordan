@@ -26,7 +26,7 @@ public abstract class Minimax {
     }
 
 
-    public static int[] run(Node currentNode, boolean isMaxPlayer){
+    public static int[] run(Node currentNode, boolean isMaxPlayer, int alpha, int beta){
 
         try {
             currentNode.findChildNodes();
@@ -53,9 +53,14 @@ public abstract class Minimax {
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i ++){
                 Node childNode = currentNode.getChildNodes().get(i);
-                evalAndMove = run(childNode, false);
+                evalAndMove = run(childNode, false, alpha, beta);
                 evalAndMove[1] = potentialMoves.get(i);
                 maxEval = Math.max(maxEval, evalAndMove[0]);
+
+                if (maxEval > beta){
+                    break;
+                }
+                alpha = Math.max(alpha, maxEval);
             }
             return evalAndMove;
 
@@ -65,9 +70,14 @@ public abstract class Minimax {
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i ++){
                 Node childNode = currentNode.getChildNodes().get(i);
-                evalAndMove = run(childNode, true);
+                evalAndMove = run(childNode, true, alpha, beta);
                 evalAndMove[1] = potentialMoves.get(i);
                 minEval = Math.min(minEval, evalAndMove[0]);
+
+                if (minEval < alpha){
+                    break;
+                }
+                beta = Math.min(beta, minEval);
             }
             return evalAndMove;
         }
