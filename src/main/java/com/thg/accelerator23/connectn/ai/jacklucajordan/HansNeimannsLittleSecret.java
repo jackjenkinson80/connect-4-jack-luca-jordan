@@ -1,30 +1,34 @@
 package com.thg.accelerator23.connectn.ai.jacklucajordan;
 
 
-import com.thehutgroup.accelerator.connectn.player.Board;
-import com.thehutgroup.accelerator.connectn.player.Counter;
-import com.thehutgroup.accelerator.connectn.player.Player;
+import com.thehutgroup.accelerator.connectn.player.*;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Node;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
+
 import java.util.Random;
 
 
 public class HansNeimannsLittleSecret extends Player {
 
+  boolean isMaxPlayer;
+
   public HansNeimannsLittleSecret(Counter counter) {
+
     super(counter, HansNeimannsLittleSecret.class.getName());
+
+    this.isMaxPlayer = (this.getCounter() == Counter.O);
+
   }
 
   @Override
   public int makeMove(Board board) {
-    //TODO: some crazy analysis
-    //TODO: make sure said analysis uses less than 2G of heap and returns within 10 seconds on whichever machine is running it
 
+    Node node = new Node(board, this.getCounter());
 
-    int randMoveIndex = new Random().nextInt(8);
+    Minimax.run(node, isMaxPlayer);
 
-    while (BoardAnalyser.columnFull(randMoveIndex, board)){
-      randMoveIndex = new Random().nextInt(8);
-    }
-    
-    return randMoveIndex;
+    return 0;
   }
 }
