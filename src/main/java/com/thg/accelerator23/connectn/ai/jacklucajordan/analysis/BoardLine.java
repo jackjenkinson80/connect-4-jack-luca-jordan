@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;
 
 import com.thehutgroup.accelerator.connectn.player.Board;
@@ -44,15 +43,12 @@ public class BoardLine implements Line {
     }
     BoardLine boardLine = (BoardLine) o;
     return Objects.equals(board, boardLine.board) &&
-        Objects.equals(currentPosition, boardLine.currentPosition) &&
-        Objects.equals(movementFunction, boardLine.movementFunction);
+            Objects.equals(currentPosition, boardLine.currentPosition) &&
+            Objects.equals(movementFunction, boardLine.movementFunction);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(board, currentPosition, movementFunction);
   }
-=======
-package com.thg.accelerator23.connectn.ai.jacklucajordan.analysis;public class BoardLine {
->>>>>>> e615e38 (undoing changed to pull)
 }
