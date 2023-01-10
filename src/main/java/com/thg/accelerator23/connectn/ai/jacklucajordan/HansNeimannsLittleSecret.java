@@ -2,7 +2,9 @@ package com.thg.accelerator23.connectn.ai.jacklucajordan;
 
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
+import com.thehutgroup.accelerator.connectn.player.GameConfig;
 import com.thehutgroup.accelerator.connectn.player.Player;
+import com.thg.accelerator23.connectn.analysis.BoardAnalyser;
 
 public class HansNeimannsLittleSecret extends Player {
 
@@ -12,10 +14,11 @@ public class HansNeimannsLittleSecret extends Player {
 
   @Override
   public int makeMove(Board board) {
-    // TODO: some crazy analysis
-    // TODO: make sure said analysis uses less than 2G of heap and returns within 10
-    // seconds on whichever machine is running it
 
+    GameConfig testconfig = new GameConfig(0, 0, 0);
+    Board testBoard = new Board(testconfig);
+    BoardAnalyser test = new BoardAnalyser(testconfig);
+    test.calculateGameState(testBoard);
     return 4;
   }
 }
