@@ -1,24 +1,29 @@
 package com.thg.accelerator23.connectn.ai.jacklucajordan;
 
-import com.thehutgroup.accelerator.connectn.player.Board;
-import com.thehutgroup.accelerator.connectn.player.Counter;
-import com.thehutgroup.accelerator.connectn.player.GameConfig;
-import com.thehutgroup.accelerator.connectn.player.Player;
-import com.thg.accelerator23.connectn.analysis.BoardAnalyser;
+import com.thehutgroup.accelerator.connectn.player.*;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Node;
+
+import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
 
 public class HansNeimannsLittleSecret extends Player {
 
+  boolean isMaxPlayer;
+
   public HansNeimannsLittleSecret(Counter counter) {
+
     super(counter, HansNeimannsLittleSecret.class.getName());
+
+    this.isMaxPlayer = (this.getCounter() == Counter.O);
+
   }
 
   @Override
   public int makeMove(Board board) {
 
-    GameConfig testconfig = new GameConfig(0, 0, 0);
-    Board testBoard = new Board(testconfig);
-    BoardAnalyser test = new BoardAnalyser(testconfig);
-    test.calculateGameState(testBoard);
-    return 4;
+    Node node = new Node(board, this.getCounter());
+
+    Minimax.run(node, isMaxPlayer);
+
+    return 0;
   }
 }
