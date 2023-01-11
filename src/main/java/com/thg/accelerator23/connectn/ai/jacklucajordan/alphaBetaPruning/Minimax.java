@@ -10,8 +10,6 @@ public abstract class Minimax {
 
     private static int evalOfPosition(GameState gameState, int depth) {
 
-    private static int evalOfPosition(GameState gameState, int depth) {
-
         if (gameState.isWin()) {
             if (gameState.getWinner() == Counter.O) {
                 return 1;
