@@ -12,21 +12,58 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MiniMaxTests {
 
     @Test
-    public void MiniMaxTest2() {
+    public void MiniMaxTest1() {
         Counter[][] counters = new Counter[10][8];
 
-        counters[4][0] = Counter.X;
-        counters[4][1] = Counter.O;
-        counters[4][2] = Counter.O;
-        counters[4][3] = Counter.X;
-        counters[4][4] = Counter.O;
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                counters[i][0] = Counter.X;
+                counters[i][1] = Counter.X;
+                counters[i][2] = Counter.X;
+            } else {
+                counters[i][0] = Counter.O;
+                counters[i][1] = Counter.O;
+                counters[i][2] = Counter.O;
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 1) {
+                counters[i][3] = Counter.X;
+                counters[i][4] = Counter.X;
+                counters[i][5] = Counter.X;
+            } else {
+                counters[i][3] = Counter.O;
+                counters[i][4] = Counter.O;
+                counters[i][5] = Counter.O;
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                counters[i][6] = Counter.X;
+            } else {
+                counters[i][6] = Counter.O;
+            }
+        }
+
+        counters[0][7] = Counter.X;
+        counters[1][7] = Counter.X;
+        counters[3][7] = Counter.O;
+        counters[4][7] = Counter.X;
+        counters[5][7] = Counter.O;
+
+        counters[7][7] = Counter.X;
+        counters[8][7] = Counter.X;
+        counters[9][7] = Counter.X;
 
         Board board = new Board(counters, new GameConfig(10, 8, 4));
         System.out.println("made");
-        Node node = new Node(board, Counter.X);
+        Node node = new Node(board, Counter.O);
         System.out.println("made");
 
-        int move = Minimax.run(node, false, -10, 10)[1];
+        int move = Minimax.run(node, false, -10, 10, 0)[1];
         assertEquals(6, move);
     }
+
 }

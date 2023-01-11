@@ -8,20 +8,20 @@ import java.util.List;
 
 public abstract class Minimax {
 
-    private static int evalOfPosition(GameState gameState) {
+    private static int evalOfPosition(GameState gameState, int depth) {
 
         if (gameState.isWin()) {
             if (gameState.getWinner() == Counter.O) {
-                return 1;
+                return 100 - depth;
             } else {
-                return -1;
+                return -100 + depth;
             }
         } else {
             return 0;
         }
     }
 
-    public static int[] run(Node currentNode, boolean isMaxPlayer, int alpha, int beta) {
+    public static int[] run(Node currentNode, boolean isMaxPlayer, int alpha, int beta, int depth) {
 
         try {
             currentNode.findChildNodes();
@@ -34,9 +34,9 @@ public abstract class Minimax {
         List<Integer> potentialMoves = currentNode.findPotentialMoves();
 
         if (currentNode.getGameState().isEnd()) {
-            System.out.println("fin");
-            evalAndMove[0] = evalOfPosition(currentNode.getGameState());
-            System.out.println(evalOfPosition(currentNode.getGameState()));
+            evalAndMove[0] = evalOfPosition(currentNode.getGameState(), depth);
+            System.out.println(evalOfPosition(currentNode.getGameState(), depth));
+            System.out.println(depth);
             evalAndMove[1] = -1;
             return evalAndMove;
         }
@@ -46,7 +46,7 @@ public abstract class Minimax {
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i++) {
                 Node childNode = currentNode.getChildNodes().get(i);
-                evalAndMove = run(childNode, false, alpha, beta);
+                evalAndMove = run(childNode, false, alpha, beta, depth + 1);
                 evalAndMove[1] = potentialMoves.get(i);
                 maxEval = Math.max(maxEval, evalAndMove[0]);
 
@@ -62,7 +62,7 @@ public abstract class Minimax {
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i++) {
                 Node childNode = currentNode.getChildNodes().get(i);
-                evalAndMove = run(childNode, true, alpha, beta);
+                evalAndMove = run(childNode, true, alpha, beta, depth + 1);
                 evalAndMove[1] = potentialMoves.get(i);
                 minEval = Math.min(minEval, evalAndMove[0]);
 
