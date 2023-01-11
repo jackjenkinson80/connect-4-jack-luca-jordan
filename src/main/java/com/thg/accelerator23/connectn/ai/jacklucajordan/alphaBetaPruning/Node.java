@@ -16,6 +16,7 @@ public class Node {
 
 
     public Node(Board board, Counter counter){
+
         this.board = board;
         this.counter = counter;
 
@@ -25,18 +26,11 @@ public class Node {
         this.gameState = boardAnalyser.calculateGameState(board);
 
         this.childNodes = new ArrayList<Node>();
-        try {
-            findChildNodes();
-
-        } catch (InvalidMoveException e) {
-            System.out.println("find child node failed");
-            throw new RuntimeException(e);
-        }
 
     }
 
 
-    private void findChildNodes() throws InvalidMoveException {
+    public void findChildNodes() throws InvalidMoveException {
         Counter childCounter;
         if (counter == Counter.X){
             childCounter = Counter.O;
@@ -45,11 +39,23 @@ public class Node {
         }
         for (int i = 0; i < 10; i++){
             if (!board.hasCounterAtPosition( new Position(i,7))){
-                Board childBoard = new Board(board, i, childCounter);
+                Board childBoard = new Board(board, i, counter);
                 childNodes.add(new Node(childBoard, childCounter));
             }
         }
     }
+
+    public List<Integer> findPotentialMoves(){
+        List<Integer> potentialMoves = new ArrayList<Integer>();
+
+        for (int i = 0; i < 10; i++){
+            if (!board.hasCounterAtPosition( new Position(i,7))){
+                potentialMoves.add(i);
+            }
+        }
+        return potentialMoves;
+    }
+
 
     public List<Node> getChildNodes(){
         return childNodes;
@@ -58,5 +64,8 @@ public class Node {
     public GameState getGameState(){
         return gameState;
     }
+
+    public Counter getCounter(){ return counter;}
+
 
 }
