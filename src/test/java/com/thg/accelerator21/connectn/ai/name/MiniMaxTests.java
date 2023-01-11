@@ -49,6 +49,7 @@ public class MiniMaxTests {
 
         counters[0][7] = Counter.X;
         counters[1][7] = Counter.X;
+
         counters[3][7] = Counter.O;
         counters[4][7] = Counter.X;
         counters[5][7] = Counter.O;
@@ -58,12 +59,24 @@ public class MiniMaxTests {
         counters[9][7] = Counter.X;
 
         Board board = new Board(counters, new GameConfig(10, 8, 4));
-        System.out.println("made");
-        Node node = new Node(board, Counter.O);
-        System.out.println("made");
+        Node node = new Node(board, Counter.X);
 
         int move = Minimax.run(node, false, -10, 10, 0)[1];
         assertEquals(6, move);
     }
 
+    @Test
+    public void IsEndTest() {
+        Counter[][] counters = new Counter[10][8];
+
+        counters[4][0] = Counter.X;
+        counters[4][1] = Counter.X;
+        counters[4][2] = Counter.X;
+        counters[4][3] = Counter.X;
+
+        Board board = new Board(counters, new GameConfig(10, 8, 4));
+        Node node = new Node(board, Counter.X);
+
+        assertTrue(node.getGameState().isEnd());
+    }
 }

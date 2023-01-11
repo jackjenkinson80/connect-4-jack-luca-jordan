@@ -38,7 +38,7 @@ public class Node {
         }
         for (int i = 0; i < 10; i++) {
             if (!board.hasCounterAtPosition(new Position(i, 7))) {
-                Board childBoard = new Board(board, i, childCounter);
+                Board childBoard = new Board(board, i, counter);
                 childNodes.add(new Node(childBoard, childCounter));
             }
         }
@@ -63,8 +63,8 @@ public class Node {
         return gameState;
     }
 
-    public Board getBoard() {
-        return board;
+    public Counter getCounter() {
+        return counter;
     }
 
 }
