@@ -27,7 +27,7 @@ public abstract class Minimax {
 
     private static boolean canWin(int moveIndex, Node currentNode){
         Node childNode = new Node(currentNode, moveIndex);
-        return childNode.getGameState().isEnd();
+        return childNode.getGameState().isWin();
     }
 
 
@@ -58,26 +58,30 @@ public abstract class Minimax {
         if (isMaxPlayer){
             int maxEval = -100;
 
-            for (int i = 0; i < currentNode.getChildNodes().size(); i++){
-                if(canWin(i, currentNode)){
-                    Node childNode = currentNode.getChildNodes().get(i);
+//            for (int i = 0; i < currentNode.getChildNodes().size(); i++){
+////                System.out.println(i);
+//                if(canWin(potentialMoves.get(i), currentNode)){
+////                    System.out.println("$$$$$$$$$$$$$");
+//                    Node childNode = currentNode.getChildNodes().get(i);
+//
+//
+//                    evalAndMove = run(childNode, false, alpha, beta, depth + 1);
+//                    evalAndMove[1] = potentialMoves.get(i);
+//                    maxEval = Math.max(maxEval, evalAndMove[0]);
+//                    if (maxEval >= beta) {
+//                        break;
+//                    }
+//                    alpha = Math.max(alpha, maxEval);
+//                    return evalAndMove;
+//                }
+//            }
 
-
-                    evalAndMove = run(childNode, false, alpha, beta, depth + 1);
-                    evalAndMove[1] = potentialMoves.get(i);
-                    maxEval = Math.max(maxEval, evalAndMove[0]);
-                    if (maxEval >= beta) {
-                        break;
-                    }
-                    alpha = Math.max(alpha, maxEval);
-                    return evalAndMove;
-                }
-            }
+            System.out.println("out");
 
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i ++) {
-//                System.out.print("move: ");
-//                System.out.println(potentialMoves.get(i));
+                System.out.print("move: ");
+                System.out.println(potentialMoves.get(i));
 
                 Node childNode = currentNode.getChildNodes().get(i);
 
@@ -97,12 +101,12 @@ public abstract class Minimax {
             int minEval = 100;
 
             for (int i = 0; i < currentNode.getChildNodes().size(); i ++){
-//                System.out.print("move: ");
-//                System.out.println(potentialMoves.get(i));
+                System.out.print("move: ");
+                System.out.println(potentialMoves.get(i));
 
                 Node childNode = currentNode.getChildNodes().get(i);
 
-                evalAndMove = run(childNode, true, alpha, beta,potentialMoves.get(i),depth + 1);
+                evalAndMove = run(childNode, true, alpha, beta,depth + 1);
                 evalAndMove[1] = potentialMoves.get(i);
                 minEval = Math.min(minEval, evalAndMove[0]);
 
