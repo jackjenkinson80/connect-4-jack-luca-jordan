@@ -8,18 +8,18 @@ import java.util.List;
 
 public abstract class Minimax {
 
-    private static int evalOfPosition(GameState gameState, int depth) {
+    // private static int evalOfPosition(GameState gameState, int depth) {
 
-        if (gameState.isWin()) {
-            if (gameState.getWinner() == Counter.O) {
-                return 1;
-            } else {
-                return -100 + depth;
-            }
-        } else {
-            return 0;
-        }
-    }
+    // if (gameState.isWin()) {
+    // if (gameState.getWinner() == Counter.O) {
+    // return 1;
+    // } else {
+    // return -100 + depth;
+    // }
+    // } else {
+    // return 0;
+    // }
+    // }
 
     public static int[] run(Node currentNode, boolean isMaxPlayer, int alpha, int beta, int depth) {
 
@@ -33,8 +33,16 @@ public abstract class Minimax {
 
         List<Integer> potentialMoves = currentNode.findPotentialMoves();
 
-        if (currentNode.getGameState().isEnd()) {
-            evalAndMove[0] = evalOfPosition(currentNode.getGameState(), depth);
+        if (currentNode.getGameState().isEnd() || depth == 10) {
+            if (isMaxPlayer) {
+                evalAndMove[0] = Strategies.strategyHub(currentNode.getGameState(), currentNode.getBoard(),
+                        currentNode.getCounter());
+
+            } else {
+                evalAndMove[0] = -Strategies.strategyHub(currentNode.getGameState(), currentNode.getBoard(),
+                        currentNode.getCounter());
+            }
+
             evalAndMove[1] = -1;
             return evalAndMove;
         }

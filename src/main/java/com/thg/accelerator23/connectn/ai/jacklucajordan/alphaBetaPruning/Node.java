@@ -67,4 +67,8 @@ public class Node {
         return counter;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
 }
