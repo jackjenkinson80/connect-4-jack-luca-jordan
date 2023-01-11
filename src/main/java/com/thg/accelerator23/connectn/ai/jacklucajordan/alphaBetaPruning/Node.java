@@ -14,6 +14,9 @@ public class Node {
     private GameState gameState;
     private Counter counter;
 
+    private int boardHeight;
+    private int boardWidth;
+
 
     public Node(Board board, Counter counter){
 
@@ -27,6 +30,33 @@ public class Node {
 
         this.childNodes = new ArrayList<Node>();
 
+        boardHeight = board.getConfig().getHeight();
+        boardWidth = board.getConfig().getWidth();
+
+    }
+
+    public Node(Node node, int moveIndex){
+        try {
+            this.board = new Board(node.board, moveIndex, node.getCounter());
+        } catch (InvalidMoveException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (counter == Counter.X){
+            this.counter = Counter.O;
+        } else {
+            this.counter = Counter.X;
+        }
+
+        GameConfig config = board.getConfig();
+        BoardAnalyser boardAnalyser = new BoardAnalyser(config);
+
+        this.gameState = boardAnalyser.calculateGameState(board);
+
+        this.childNodes = new ArrayList<Node>();
+
+        boardHeight = board.getConfig().getHeight();
+        boardWidth = board.getConfig().getWidth();
     }
 
 
@@ -37,19 +67,21 @@ public class Node {
         } else {
             childCounter = Counter.X;
         }
-        for (int i = 0; i < 10; i++){
-            if (!board.hasCounterAtPosition( new Position(i,7))){
+        for (int i = 0; i < boardWidth; i++){
+            if (!board.hasCounterAtPosition( new Position(i,boardHeight - 1 ))){
                 Board childBoard = new Board(board, i, counter);
                 childNodes.add(new Node(childBoard, childCounter));
             }
         }
     }
 
+
+
     public List<Integer> findPotentialMoves(){
         List<Integer> potentialMoves = new ArrayList<Integer>();
 
-        for (int i = 0; i < 10; i++){
-            if (!board.hasCounterAtPosition( new Position(i,7))){
+        for (int i = 0; i < boardWidth; i++){
+            if (!board.hasCounterAtPosition( new Position(i,boardHeight - 1))){
                 potentialMoves.add(i);
             }
         }
