@@ -5,6 +5,8 @@ import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.GameConfig;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Node;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,18 +21,41 @@ public class MiniMaxTests {
 
         Counter[][] counters = new Counter[width][height];
 
-        counters[0][0] = Counter.O;
-        counters[0][1] = Counter.O;
-        counters[0][2] = Counter.O;
+        counters[0][0] = Counter.X;
+        counters[0][1] = Counter.X;
+        counters[0][2] = Counter.X;
 
 
         Board board = new Board(counters, new GameConfig(width, height, 4));
-        Node node = new Node(board, Counter.X);
+        Node node = new Node(board, Counter.O);
 
 
-        int move = Minimax.minimax(node, false, -1000, 1000).get(1);
+        int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
 
         assertEquals(0, move);
 
+    }
+
+    @Test
+    public void isEndTest(){
+        int width = 5;
+        int height = 5;
+
+        Counter[][] counters = new Counter[width][height];
+
+        counters[0][0] = Counter.X;
+        counters[0][1] = Counter.X;
+        counters[0][2] = Counter.X;
+        counters[0][3] = Counter.X;
+
+
+        Board board = new Board(counters, new GameConfig(width, height, 4));
+        BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
+        GameState gameState = boardAnalyser.calculateGameState(board);
+
+
+
+
+        assertTrue(gameState.isEnd());
     }
 }

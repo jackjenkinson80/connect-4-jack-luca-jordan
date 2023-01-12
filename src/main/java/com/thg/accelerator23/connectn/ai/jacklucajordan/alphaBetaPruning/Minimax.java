@@ -3,6 +3,7 @@ package com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning;
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.InvalidMoveException;
+import com.thehutgroup.accelerator.connectn.player.Position;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 
@@ -14,22 +15,25 @@ public abstract class Minimax {
 
 
 
-    private static int evalOfPosition(Node node){
+    private static int evalOfPosition(Node node, int depth){
         BoardAnalyser boardAnalyser = new BoardAnalyser(node.board.getConfig());
         GameState gameState = boardAnalyser.calculateGameState(node.board);
 
         if (gameState.isWin()){
             if (gameState.getWinner() == Counter.O){
-                return 1;
+                return 100 - depth;
             } else {
-                return -1;
+                return depth - 100;
             }
         } else {
             return 0;
         }
     }
 
-    public static List<Integer> minimax(Node node, boolean isMaxPlayer, int alpha, int beta){
+
+
+
+    public static List<Integer> minimax(Node node, boolean isMaxPlayer, int alpha, int beta, int depth){
         System.out.println("run minimax");
         BoardAnalyser boardAnalyser = new BoardAnalyser(node.board.getConfig());
         GameState gameState = boardAnalyser.calculateGameState(node.board);
@@ -39,25 +43,28 @@ public abstract class Minimax {
         List<Integer> potentialMoves = node.potentialMoves();
 
 
+
         bestValueAndMove.add(0);
         bestValueAndMove.add(0);
         int value;
 
         if (gameState.isEnd()){
-            bestValueAndMove.add(evalOfPosition(node));
-            bestValueAndMove.add(-1);
-            System.out.println("endSize:");
-            System.out.println(bestValueAndMove.size());
+            System.out.println("made into isEnd");
+            bestValueAndMove.set(0, evalOfPosition(node, depth));
+            bestValueAndMove.set(1, -1);
+            if (evalOfPosition(node, depth) == -99){
+                System.out.println("----------------------------");
+            }
             return bestValueAndMove;
 
         } else if (isMaxPlayer){
 
-            int maxValue = -100;
+            int maxValue = -1000;
 
             for (int i = 0; i < potentialMoves.size(); i++) {
                 int potentialMove = potentialMoves.get(i);
                 Node childNode = new Node(node, potentialMove);
-                valueAndMove = minimax(childNode, false, alpha, beta);
+                valueAndMove = minimax(childNode, false, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
 
                 alpha = Math.max(value, alpha);
@@ -65,38 +72,42 @@ public abstract class Minimax {
                 if (value > maxValue) {
                     bestValueAndMove.set(0, valueAndMove.get(0));
                     bestValueAndMove.set(1, i);
+
+                    maxValue = value;
                 }
 
                 if (value >= beta){
                     break;
                 }
             }
-            System.out.print("maxi: ");
-            System.out.println(bestValueAndMove.size());
             return bestValueAndMove;
 
 
         } else {
-            int minValue = 100;
+            int minValue = 1000;
 
             for (int i = 0; i < potentialMoves.size(); i++) {
+
                 int potentialMove = potentialMoves.get(i);
+                System.out.println(potentialMove);
                 Node childNode = new Node(node, potentialMove);
-                valueAndMove = minimax(childNode, true, alpha, beta);
+                valueAndMove = minimax(childNode, true, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
+
 
                 beta = Math.min(value, beta);
 
                 if (value < minValue) {
-                    bestValueAndMove = valueAndMove;
+                    bestValueAndMove.set(0, valueAndMove.get(0));
+                    bestValueAndMove.set(1, i);
+
+                    minValue = value;
                 }
 
                 if (value <= alpha){
                     break;
                 }
             }
-            System.out.print("mini: ");
-            System.out.println(bestValueAndMove.size());
             return bestValueAndMove;
         }
     }
