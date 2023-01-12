@@ -28,9 +28,9 @@ public class MiniMaxTests {
         Node node = new Node(board, Counter.X);
 
 
-        int move = Minimax.minimax(node, true, -1000, 1000).get(1);
+        int move = Minimax.minimax(node, false, -1000, 1000).get(1);
 
-        assertEquals(2, move);
+        assertEquals(0, move);
 
     }
 }
