@@ -52,9 +52,6 @@ public abstract class Minimax {
             System.out.println("made into isEnd");
             bestValueAndMove.set(0, evalOfPosition(node, depth));
             bestValueAndMove.set(1, -1);
-            if (evalOfPosition(node, depth) == -99){
-                System.out.println("----------------------------");
-            }
             return bestValueAndMove;
 
         } else if (isMaxPlayer){
@@ -64,6 +61,9 @@ public abstract class Minimax {
             for (int i = 0; i < potentialMoves.size(); i++) {
                 int potentialMove = potentialMoves.get(i);
                 Node childNode = new Node(node, potentialMove);
+                System.out.print(potentialMove);
+                System.out.print(", ");
+
                 valueAndMove = minimax(childNode, false, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
 
@@ -90,6 +90,8 @@ public abstract class Minimax {
 
                 int potentialMove = potentialMoves.get(i);
                 System.out.println(potentialMove);
+                System.out.print(", ");
+
                 Node childNode = new Node(node, potentialMove);
                 valueAndMove = minimax(childNode, true, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);

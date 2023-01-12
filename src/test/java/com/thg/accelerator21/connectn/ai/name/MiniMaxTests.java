@@ -9,6 +9,8 @@ import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 import org.junit.jupiter.api.Test;
 
+import javax.sql.XAConnection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MiniMaxTests {
@@ -16,15 +18,13 @@ public class MiniMaxTests {
 
     @Test
     public void MiniMaxTest3(){
-        int width = 5;
-        int height = 5;
+        int width = 6;
+        int height = 1;
 
         Counter[][] counters = new Counter[width][height];
 
-        counters[0][0] = Counter.X;
-        counters[0][1] = Counter.X;
-        counters[0][2] = Counter.X;
-
+        counters[3][0] = Counter.X;
+        counters[2][0] = Counter.X;
 
         Board board = new Board(counters, new GameConfig(width, height, 4));
         Node node = new Node(board, Counter.O);
@@ -32,7 +32,7 @@ public class MiniMaxTests {
 
         int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
 
-        assertEquals(0, move);
+        assertEquals(4, move);
 
     }
 
