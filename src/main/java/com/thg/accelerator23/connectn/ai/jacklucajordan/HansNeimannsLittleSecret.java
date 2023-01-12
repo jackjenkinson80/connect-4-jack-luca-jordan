@@ -27,6 +27,6 @@ public class HansNeimannsLittleSecret extends Player {
 
     Node node = new Node(board, this.getCounter());
 
-    return Minimax.run(node, isMaxPlayer, -10,10,  0)[1];
+    return Minimax.minimax(node, isMaxPlayer, -1000, 1000).get(1);
   }
 }
