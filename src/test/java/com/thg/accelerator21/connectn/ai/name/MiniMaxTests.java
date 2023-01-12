@@ -15,20 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MiniMaxTests {
 
-
     @Test
-    public void MiniMaxTest3(){
-        int width = 6;
-        int height = 1;
+    public void MiniMaxTest3() {
+        int width = 7;
+        int height = 4;
 
         Counter[][] counters = new Counter[width][height];
 
-        counters[3][0] = Counter.X;
-        counters[2][0] = Counter.X;
-
         Board board = new Board(counters, new GameConfig(width, height, 4));
         Node node = new Node(board, Counter.O);
-
 
         int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
 
@@ -37,7 +32,7 @@ public class MiniMaxTests {
     }
 
     @Test
-    public void isEndTest(){
+    public void isEndTest() {
         int width = 5;
         int height = 5;
 
@@ -48,13 +43,9 @@ public class MiniMaxTests {
         counters[0][2] = Counter.X;
         counters[0][3] = Counter.X;
 
-
         Board board = new Board(counters, new GameConfig(width, height, 4));
         BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
         GameState gameState = boardAnalyser.calculateGameState(board);
-
-
-
 
         assertTrue(gameState.isEnd());
     }
