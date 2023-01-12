@@ -12,21 +12,6 @@ import java.util.List;
 
 public abstract class Minimax {
 
-    private static int evalOfPosition(Node node, int depth) {
-        BoardAnalyser boardAnalyser = new BoardAnalyser(node.board.getConfig());
-        GameState gameState = boardAnalyser.calculateGameState(node.board);
-
-        if (gameState.isWin()) {
-            if (gameState.getWinner() == Counter.O) {
-                return 100 - depth;
-            } else {
-                return depth - 100;
-            }
-        } else {
-            return 0;
-        }
-    }
-
     public static List<Integer> minimax(Node node, boolean isMaxPlayer, int alpha, int beta, int depth) {
         System.out.println("run minimax");
         BoardAnalyser boardAnalyser = new BoardAnalyser(node.board.getConfig());
@@ -40,22 +25,16 @@ public abstract class Minimax {
         bestValueAndMove.add(0);
         int value;
 
-<<<<<<< HEAD
-        if (gameState.isEnd() || depth == 5) {
+        if (gameState.isEnd() || depth == 6) {
             if (isMaxPlayer) {
-                bestValueAndMove.set(0, Strategies.strategyHub(node.getBoard(),
-                        node.getCounter()));
+                bestValueAndMove.set(0, -Strategies.strategyHub(node.getBoard(),
+                        node.getCounter(), gameState, depth));
 
             } else {
-                bestValueAndMove.set(0, -Strategies.strategyHub(node.getBoard(),
-                        node.getCounter()));
+                bestValueAndMove.set(0, Strategies.strategyHub(node.getBoard(),
+                        node.getCounter(), gameState, depth));
             }
 
-=======
-        if (gameState.isEnd()) {
-            System.out.println("made into isEnd");
-            bestValueAndMove.set(0, evalOfPosition(node, depth));
->>>>>>> newjack
             bestValueAndMove.set(1, -1);
 
             return bestValueAndMove;
@@ -70,7 +49,6 @@ public abstract class Minimax {
                 System.out.println(potentialMove);
                 valueAndMove = minimax(childNode, false, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
-
                 alpha = Math.max(value, alpha);
 
                 if (value > maxValue) {
@@ -98,11 +76,6 @@ public abstract class Minimax {
                 Node childNode = new Node(node, potentialMove);
                 valueAndMove = minimax(childNode, true, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
-<<<<<<< HEAD
-                System.out.println(potentialMove);
-=======
-
->>>>>>> newjack
                 beta = Math.min(value, beta);
 
                 if (value < minValue) {

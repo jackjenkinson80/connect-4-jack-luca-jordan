@@ -2,6 +2,8 @@ package com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning;
 
 import java.util.ArrayList;
 
+import javax.swing.text.AsyncBoxView.ChildState;
+
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.Position;
@@ -9,9 +11,18 @@ import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 
 public class Strategies {
 
-    public static int strategyHub(Board board, Counter nodeCounter) {
-        return checkRowsOfFour(board, nodeCounter);
+    public static int strategyHub(Board board, Counter nodeCounter, GameState gameState, int depth) {
+        if (gameState.getWinner() != null) {
+            if (gameState.getWinner().equals(nodeCounter)) {
+                return 1000 - depth;
+            } else {
+                return 990 - depth;
+            }
 
+        } else {
+            return checkRowsOfFour(board, nodeCounter);
+
+        }
     }
 
     private static int checkRowsOfFour(Board board, Counter counterThatDeterminesPositiveCounter) {
@@ -24,15 +35,15 @@ public class Strategies {
                             originPositionForQuandruplets);
                 }
                 // verticals
-                if (row < board.getConfig().getHeight() - 3) {
+                if (row <= board.getConfig().getHeight() - 3) {
                     evalSum += checkCountersForVertical(board, counterThatDeterminesPositiveCounter,
                             originPositionForQuandruplets);
                 }
-                if (column < board.getConfig().getWidth() - 3 && row < board.getConfig().getHeight() - 3) {
+                if (column <= board.getConfig().getWidth() - 3 && row <= board.getConfig().getHeight() - 3) {
                     evalSum += checkCountersForLeftToRightDiagonal(board, counterThatDeterminesPositiveCounter,
                             originPositionForQuandruplets);
                 }
-                if (column > 3 && row < board.getConfig().getHeight() - 3) {
+                if (column >= 3 && row <= board.getConfig().getHeight() - 3) {
                     evalSum += checkCountersForRightToLeftDiagonal(board, counterThatDeterminesPositiveCounter,
                             originPositionForQuandruplets);
                 }
