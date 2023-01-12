@@ -40,6 +40,7 @@ public abstract class Minimax {
         bestValueAndMove.add(0);
         int value;
 
+<<<<<<< HEAD
         if (gameState.isEnd() || depth == 5) {
             if (isMaxPlayer) {
                 bestValueAndMove.set(0, Strategies.strategyHub(node.getBoard(),
@@ -50,6 +51,11 @@ public abstract class Minimax {
                         node.getCounter()));
             }
 
+=======
+        if (gameState.isEnd()) {
+            System.out.println("made into isEnd");
+            bestValueAndMove.set(0, evalOfPosition(node, depth));
+>>>>>>> newjack
             bestValueAndMove.set(1, -1);
 
             return bestValueAndMove;
@@ -92,7 +98,11 @@ public abstract class Minimax {
                 Node childNode = new Node(node, potentialMove);
                 valueAndMove = minimax(childNode, true, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
+<<<<<<< HEAD
                 System.out.println(potentialMove);
+=======
+
+>>>>>>> newjack
                 beta = Math.min(value, beta);
 
                 if (value < minValue) {

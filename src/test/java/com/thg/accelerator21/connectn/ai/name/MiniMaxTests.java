@@ -27,7 +27,7 @@ public class MiniMaxTests {
 
         int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
 
-        assertEquals(4, move);
+        assertEquals(3, move);
 
     }
 
