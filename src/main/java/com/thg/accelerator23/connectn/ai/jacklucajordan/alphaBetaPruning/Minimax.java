@@ -13,7 +13,6 @@ import java.util.List;
 public abstract class Minimax {
 
     public static List<Integer> minimax(Node node, boolean isMaxPlayer, int alpha, int beta, int depth) {
-        System.out.println("run minimax");
         BoardAnalyser boardAnalyser = new BoardAnalyser(node.board.getConfig());
         GameState gameState = boardAnalyser.calculateGameState(node.board);
 
@@ -46,7 +45,6 @@ public abstract class Minimax {
             for (int i = 0; i < potentialMoves.size(); i++) {
                 int potentialMove = potentialMoves.get(i);
                 Node childNode = new Node(node, potentialMove);
-                System.out.println(potentialMove);
                 valueAndMove = minimax(childNode, false, alpha, beta, depth + 1);
                 value = valueAndMove.get(0);
                 alpha = Math.max(value, alpha);
@@ -62,8 +60,7 @@ public abstract class Minimax {
                     break;
                 }
             }
-            System.out.println("at depth " + depth + " i chose move at position " + bestValueAndMove.get(1)
-                    + " weight of move is " + bestValueAndMove.get(0));
+
             return bestValueAndMove;
 
         } else {
@@ -89,8 +86,7 @@ public abstract class Minimax {
                     break;
                 }
             }
-            System.out.println("at depth " + depth + " i chose move at position " + bestValueAndMove.get(1)
-                    + " weight of move is " + bestValueAndMove.get(0));
+
             return bestValueAndMove;
         }
     }

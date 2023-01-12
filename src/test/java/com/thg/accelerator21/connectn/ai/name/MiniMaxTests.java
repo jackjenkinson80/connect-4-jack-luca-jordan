@@ -3,62 +3,50 @@ package com.thg.accelerator21.connectn.ai.name;
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.GameConfig;
+import com.thehutgroup.accelerator.connectn.player.InvalidMoveException;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Node;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 import org.junit.jupiter.api.Test;
-
+import static com.thehutgroup.accelerator.connectn.player.Counter.O;
+import static com.thehutgroup.accelerator.connectn.player.Counter.X;
 import javax.sql.XAConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MiniMaxTests {
+    private Counter[][] rotateBoard(Counter[][] board) {
+        Counter[][] newBoard = new Counter[board[0].length][board.length];
+        for (int i = 0; i < board[0].length; i++) {
+            for (int j = board.length - 1; j >= 0; j--) {
+                newBoard[i][j] = board[j][i];
+            }
+        }
+        return newBoard;
+    }
 
     @Test
-    public void MiniMaxTest3() {
-        int width = 7;
-        int height = 6;
+    public void MiniMaxTest3() throws InvalidMoveException {
+        int width = 10;
+        int height = 8;
 
-        Counter[][] counters = new Counter[width][height];
-        counters[0][0] = Counter.X;
-
-        counters[1][0] = Counter.O;
-        counters[1][1] = Counter.X;
-        counters[1][2] = Counter.X;
-        counters[1][3] = Counter.X;
-
-        counters[2][0] = Counter.O;
-        counters[2][1] = Counter.O;
-        counters[2][2] = Counter.O;
-        counters[2][2] = Counter.X;
-
-        counters[3][0] = Counter.X;
-        counters[3][1] = Counter.X;
-        counters[3][2] = Counter.X;
-        counters[3][3] = Counter.O;
-
-        counters[4][0] = Counter.X;
-        counters[4][1] = Counter.O;
-        counters[4][2] = Counter.O;
-        counters[4][3] = Counter.O;
-        counters[4][4] = Counter.X;
-
-        counters[5][0] = Counter.X;
-        counters[5][1] = Counter.X;
-        counters[5][2] = Counter.O;
-        counters[5][3] = Counter.X;
-
-        counters[6][0] = Counter.O;
-        counters[6][1] = Counter.X;
-        counters[6][2] = Counter.X;
-
+        Counter[][] counters = new Counter[height][width];
+        counters[7] = new Counter[] { null, null, O, O, null, X, null, X, null, null };
+        counters[6] = new Counter[] { null, null, X, X, null, X, null, O, null, null };
+        counters[5] = new Counter[] { null, null, O, X, null, O, null, X, null, null };
+        counters[4] = new Counter[] { null, null, O, O, O, X, X, O, null, null };
+        counters[3] = new Counter[] { null, null, X, X, X, O, O, O, null, null };
+        counters[2] = new Counter[] { null, null, X, O, O, X, X, X, null, null };
+        counters[1] = new Counter[] { null, X, O, X, X, O, X, O, O, null };
+        counters[0] = new Counter[] { O, X, O, O, X, O, X, O, O, null };
+        counters = rotateBoard(counters);
         Board board = new Board(counters, new GameConfig(width, height, 4));
         Node node = new Node(board, Counter.O);
 
         int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
 
-        assertEquals(-1, move);
+        assertEquals(8, move);
 
     }
 
