@@ -1,9 +1,5 @@
 package com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning;
 
-import com.thehutgroup.accelerator.connectn.player.Board;
-import com.thehutgroup.accelerator.connectn.player.Counter;
-import com.thehutgroup.accelerator.connectn.player.InvalidMoveException;
-import com.thehutgroup.accelerator.connectn.player.Position;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 
@@ -40,7 +36,7 @@ public abstract class Minimax {
 
         } else if (isMaxPlayer) {
 
-            int maxValue = -1000;
+            int maxValue = -1000000;
 
             for (int i = 0; i < potentialMoves.size(); i++) {
                 int potentialMove = potentialMoves.get(i);
@@ -64,7 +60,7 @@ public abstract class Minimax {
             return bestValueAndMove;
 
         } else {
-            int minValue = 1000;
+            int minValue = 1000000;
 
             for (int i = 0; i < potentialMoves.size(); i++) {
 

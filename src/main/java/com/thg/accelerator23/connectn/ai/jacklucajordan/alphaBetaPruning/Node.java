@@ -1,10 +1,7 @@
 package com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning;
 
 import com.thehutgroup.accelerator.connectn.player.*;
-import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
-import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 

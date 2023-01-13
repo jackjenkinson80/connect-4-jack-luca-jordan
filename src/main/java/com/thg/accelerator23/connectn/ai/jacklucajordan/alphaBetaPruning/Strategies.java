@@ -1,9 +1,5 @@
 package com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning;
 
-import java.util.ArrayList;
-
-import javax.swing.text.AsyncBoxView.ChildState;
-
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.Position;
@@ -14,13 +10,13 @@ public class Strategies {
     public static int strategyHub(Board board, Counter nodeCounter, GameState gameState, int depth) {
         if (gameState.getWinner() != null) {
             if (gameState.getWinner().equals(nodeCounter)) {
-                return 1000 - depth;
+                return 100001 - depth;
             } else {
-                return 990 - depth;
+                return -100000 - depth;
             }
 
         } else {
-            return checkRowsOfFour(board, nodeCounter);
+            return checkRowsOfFour(board, nodeCounter) - depth;
 
         }
     }
@@ -59,16 +55,38 @@ public class Strategies {
         int posSum = 0;
         boolean hasTargetCounter = false;
         boolean hasOppositeCounter = false;
+        boolean hasTwoTarger = false;
+        boolean hasTwoEnemy = false;
         for (int i = 0; i < positions.length; i++) {
             if (board.getCounterAtPosition(positions[i]) != null) {
 
                 if (board.getCounterAtPosition(positions[i]).equals(targetCounter)) {
+                    if (hasTargetCounter) {
+                        if (hasTwoTarger) {
+                            posSum += 1000;
+
+                        } else {
+                            posSum += 10;
+                        }
+                        hasTwoTarger = true;
+                    }
                     hasTargetCounter = true;
-                    posSum++;
+
                 }
                 if (board.getCounterAtPosition(positions[i]).equals(targetCounter.getOther())) {
                     hasOppositeCounter = true;
-                    posSum--;
+                    if (hasOppositeCounter) {
+                        if (hasTwoEnemy) {
+                            posSum -= 1001;
+
+                        } else {
+                            posSum -= 11;
+
+                        }
+                        hasTwoEnemy = true;
+
+                    }
+                    hasOppositeCounter = true;
                 }
                 if (hasTargetCounter && hasOppositeCounter) {
                     return 0;

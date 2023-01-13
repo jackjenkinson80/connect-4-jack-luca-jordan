@@ -2,11 +2,8 @@ package com.thg.accelerator23.connectn.ai.jacklucajordan;
 
 import com.thehutgroup.accelerator.connectn.player.*;
 import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Node;
-import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.BoardAnalyser;
-import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
-import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
 
-import java.util.Random;
+import com.thg.accelerator23.connectn.ai.jacklucajordan.alphaBetaPruning.Minimax;
 
 public class HansNeimannsLittleSecret extends Player {
 
@@ -25,6 +22,6 @@ public class HansNeimannsLittleSecret extends Player {
 
     Node node = new Node(board, this.getCounter());
 
-    return Minimax.minimax(node, isMaxPlayer, -1000000, 1000000, 0).get(1);
+    return Minimax.minimax(node, isMaxPlayer, -1000000000, 1000000000, 0).get(1);
   }
 }

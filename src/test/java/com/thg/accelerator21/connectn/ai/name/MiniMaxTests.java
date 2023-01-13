@@ -11,9 +11,10 @@ import com.thg.accelerator23.connectn.ai.jacklucajordan.analysis.GameState;
 import org.junit.jupiter.api.Test;
 import static com.thehutgroup.accelerator.connectn.player.Counter.O;
 import static com.thehutgroup.accelerator.connectn.player.Counter.X;
-import javax.sql.XAConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 
 public class MiniMaxTests {
     private Counter[][] rotateBoard(Counter[][] board) {
@@ -38,15 +39,15 @@ public class MiniMaxTests {
         counters[4] = new Counter[] { null, null, O, O, O, X, X, O, null, null };
         counters[3] = new Counter[] { null, null, X, X, X, O, O, O, null, null };
         counters[2] = new Counter[] { null, null, X, O, O, X, X, X, null, null };
-        counters[1] = new Counter[] { null, X, O, X, X, O, X, O, O, null };
+        counters[1] = new Counter[] { null, X, O, X, X, O, X, O, null, null };
         counters[0] = new Counter[] { O, X, O, O, X, O, X, O, O, null };
         counters = rotateBoard(counters);
         Board board = new Board(counters, new GameConfig(width, height, 4));
-        Node node = new Node(board, Counter.O);
+        Node node = new Node(board, Counter.X);
 
-        int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
-
-        assertEquals(8, move);
+        List<Integer> list = Minimax.minimax(node, false, -1000, 1000, 0);
+        System.out.println(list.get(0));
+        assertEquals(0, list.get(1));
 
     }
 
@@ -67,5 +68,29 @@ public class MiniMaxTests {
         GameState gameState = boardAnalyser.calculateGameState(board);
 
         assertTrue(gameState.isEnd());
+    }
+
+    @Test
+    public void testmiddlecolumn() {
+        int width = 10;
+        int height = 8;
+        Counter[][] counters = new Counter[width][height];
+        counters[5][0] = Counter.X;
+        counters[5][1] = Counter.O;
+        counters[5][2] = Counter.X;
+        counters[5][3] = Counter.O;
+        counters[5][4] = Counter.X;
+        counters[5][5] = Counter.O;
+        counters[5][6] = Counter.O;
+        counters[5][7] = Counter.O;
+        counters[4][0] = Counter.X;
+        counters[4][1] = Counter.X;
+        Board board = new Board(counters, new GameConfig(width, height, 4));
+        Node node = new Node(board, Counter.X);
+
+        int move = Minimax.minimax(node, false, -1000, 1000, 0).get(1);
+
+        assertEquals(3, move);
+
     }
 }
