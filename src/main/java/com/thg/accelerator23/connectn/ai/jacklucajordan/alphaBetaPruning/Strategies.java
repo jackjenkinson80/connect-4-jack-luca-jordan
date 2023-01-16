@@ -12,7 +12,7 @@ public class Strategies {
             if (gameState.getWinner().equals(nodeCounter)) {
                 return 100001 - depth;
             } else {
-                return -100000 - depth;
+                return -100000 + depth;
             }
 
         } else {
